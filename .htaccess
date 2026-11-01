@@ -1,0 +1,12 @@
+# Safety net when the hosting document root is the project folder instead of public_html.
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(app|config|storage|vendor|database)(/|$) - [F,L]
+    RewriteRule ^\.env - [F,L]
+    RewriteRule \.(sql|lock)$ - [F,L]
+    RewriteRule ^public_html/ - [L]
+    RewriteCond %{REQUEST_URI} !^/public_html/
+    RewriteRule ^(.*)$ public_html/$1 [L]
+</IfModule>

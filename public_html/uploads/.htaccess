@@ -1,0 +1,23 @@
+Options -Indexes
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "(?i)\.(php|phtml|phar|phps|cgi|pl|py|sh)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    <FilesMatch "(?i)\.(php|phtml|phar|phps|cgi|pl|py|sh)$">
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+RemoveHandler .php .phtml .phar .phps
+RemoveType .php .phtml .phar .phps
+
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
