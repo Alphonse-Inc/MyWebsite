@@ -20,16 +20,28 @@ final class Mailer
         $mail = new PHPMailer(true);
         try {
             $host = trim((string) ($settings['smtp_host'] ?? ''));
+            $usingEnv = false;
+            if ($host === '') {
+                $host = trim((string) Env::get('SMTP_HOST', ''));
+                $usingEnv = $host !== '';
+            }
             if ($host !== '') {
                 $mail->isSMTP();
                 $mail->Host = $host;
-                $mail->Port = (int) ($settings['smtp_port'] ?? 587);
-                $user = (string) ($settings['smtp_user'] ?? '');
-                $pass = (string) ($settings['smtp_pass'] ?? '');
+                if ($usingEnv) {
+                    $mail->Port = (int) Env::get('SMTP_PORT', '587');
+                    $user = (string) Env::get('SMTP_USER', '');
+                    $pass = (string) Env::get('SMTP_PASS', '');
+                    $encryption = strtolower((string) Env::get('SMTP_ENCRYPTION', 'tls'));
+                } else {
+                    $mail->Port = (int) ($settings['smtp_port'] ?? 587);
+                    $user = (string) ($settings['smtp_user'] ?? '');
+                    $pass = (string) ($settings['smtp_pass'] ?? '');
+                    $encryption = strtolower((string) ($settings['smtp_encryption'] ?? 'tls'));
+                }
                 $mail->SMTPAuth = $user !== '';
                 $mail->Username = $user;
                 $mail->Password = $pass;
-                $encryption = strtolower((string) ($settings['smtp_encryption'] ?? 'tls'));
                 if ($encryption === 'tls') {
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 } elseif ($encryption === 'ssl') {
@@ -41,8 +53,14 @@ final class Mailer
             } else {
                 $mail->isMail();
             }
-            $fromEmail = (string) ($settings['smtp_from_email'] ?? $settings['notify_email'] ?? 'iamemmaafolayan@gmail.com');
-            $fromName = (string) ($settings['smtp_from_name'] ?? 'Emmanuel Afolayan');
+            $fromEmail = (string) ($settings['smtp_from_email'] ?? '');
+            if ($fromEmail === '') {
+                $fromEmail = (string) Env::get('SMTP_FROM_EMAIL', (string) ($settings['notify_email'] ?? 'iamemmaafolayan@gmail.com'));
+            }
+            $fromName = (string) ($settings['smtp_from_name'] ?? '');
+            if ($fromName === '') {
+                $fromName = (string) Env::get('SMTP_FROM_NAME', 'Emmanuel Afolayan');
+            }
             $mail->setFrom($fromEmail, $fromName);
             $mail->addAddress($to);
             $mail->Subject = single_line($subject, 180);

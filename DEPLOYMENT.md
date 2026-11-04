@@ -24,7 +24,7 @@ Suggested limits in MultiPHP INI or `.user.ini`:
 1. In cPanel, create a MySQL database and a user with all privileges on that database.
 2. Open phpMyAdmin and import `database/schema.sql`.
 3. Copy `.env.example` to `.env` in the project root (the home directory, not inside `public_html`).
-4. Set `APP_URL` to the canonical https origin with no trailing slash, and set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASS`. Do not commit `.env`.
+4. Set `APP_URL=https://muyiwa-dev.com.ng` with no trailing slash, and set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASS`. Do not commit `.env`. The step-by-step cPanel upload is in `HOSTING.md`.
 
 ## Seed
 
@@ -61,7 +61,7 @@ Project images are stored in `public_html/uploads/projects/{id}/` as WebP and JP
 
 ## HTTPS
 
-`public_html/.htaccess` redirects HTTP to HTTPS and `www` to the apex host when the request is not already secure. Localhost is excluded. If the certificate is not active yet, comment out those two redirect blocks, issue the certificate, then restore them.
+`www` redirects to the apex host and keeps the current scheme, so the first upload still answers on HTTP. The force-HTTPS block in `public_html/.htaccess` ships commented out. Upload the site, confirm it loads on HTTP, run AutoSSL, then uncomment that block. Leave cPanel "Force HTTPS Redirect" off until the certificate is valid. Details are in `HOSTING.md`.
 
 ## Local smoke test
 

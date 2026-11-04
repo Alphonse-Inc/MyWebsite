@@ -29,7 +29,12 @@ function e(mixed $value): string
 
 function app_url(): string
 {
-    return rtrim((string) \App\Core\Env::get('APP_URL', ''), '/');
+    $configured = \App\Core\Env::get('APP_URL');
+    if (is_string($configured) && $configured !== '') {
+        return rtrim($configured, '/');
+    }
+    $fallback = config('app')['url'] ?? 'https://muyiwa-dev.com.ng';
+    return rtrim((string) $fallback, '/');
 }
 
 function url(string $path = '/'): string

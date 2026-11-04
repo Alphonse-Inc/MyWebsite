@@ -1,5 +1,16 @@
-# Safety net when the hosting document root is the project folder instead of public_html.
+# Used only when the account document root is this project folder
+# (the whole repository was uploaded into public_html). The preferred
+# cPanel layout does not serve this file. See HOSTING.md.
 Options -Indexes
+
+<FilesMatch "^\.env">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Deny from all
+    </IfModule>
+</FilesMatch>
 
 <IfModule mod_rewrite.c>
     RewriteEngine On

@@ -19,4 +19,4 @@ Production is Apache. The PHP built-in server is only a local check:
 php -S 127.0.0.1:8080 -t public_html public_html/router.php
 ```
 
-See `DEPLOYMENT.md` for cPanel, the database import, the seeder, and the first login. See `MISSING_DATA.md` for facts that still need confirmation.
+See `HOSTING.md` for the cPanel upload to https://muyiwa-dev.com.ng. See `DEPLOYMENT.md` for the first login. See `MISSING_DATA.md` for facts that still need confirmation.

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+    'url' => 'https://muyiwa-dev.com.ng',
     'session_name' => 'ea_portfolio',
     'session_idle' => 1800,
     'login_max_attempts' => 5,

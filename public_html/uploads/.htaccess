@@ -14,10 +14,5 @@ Options -Indexes
 
 RemoveHandler .php .phtml .phar .phps
 RemoveType .php .phtml .phar .phps
-
-<IfModule mod_php.c>
-    php_flag engine off
-</IfModule>
-<IfModule mod_php8.c>
-    php_flag engine off
-</IfModule>
+# php_flag is omitted on purpose. On cPanel PHP-FPM and LiteSpeed it
+# returns 500 for every file in this directory.

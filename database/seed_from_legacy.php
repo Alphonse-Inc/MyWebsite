@@ -138,7 +138,7 @@ try {
     throw $e;
 }
 
-$legacy = 'https://muyiwa-dev.com.ng/';
+$legacy = rtrim((string) Env::get('LEGACY_ASSET_BASE', 'https://muyiwa-dev.com.ng'), '/') . '/';
 $profileDir = $uploadRoot . '/profile';
 if (!is_dir($profileDir)) {
     mkdir($profileDir, 0755, true);
