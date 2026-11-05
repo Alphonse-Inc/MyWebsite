@@ -4,9 +4,9 @@
 $neighbors = $neighbors ?? ['prev' => null, 'next' => null];
 ?>
 <article class="section">
-    <div class="mx-auto max-w-6xl px-4 md:px-6">
-        <a class="font-mono text-sm text-accent" href="<?= e(url('/projects')) ?>">← <?= e(setting($settings, 'label_projects', 'Projects')) ?></a>
-        <header class="mt-4 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+    <div class="pub-wrap">
+        <a class="pub-back" href="<?= e(url('/projects')) ?>">← <?= e(setting($settings, 'label_projects', 'Projects')) ?></a>
+        <header class="mt-8 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
                 <p class="eyebrow"><?= e((string) ($project['category_name'] ?? '')) ?><?= $project['year'] ? ' · ' . e((string) $project['year']) : '' ?></p>
                 <h1 class="section-title"><?= e($project['name']) ?></h1>
@@ -22,7 +22,7 @@ $neighbors = $neighbors ?? ['prev' => null, 'next' => null];
             </ul>
         <?php endif; ?>
         <?php if ($images !== []): ?>
-            <div class="swiper project-swiper mt-8 overflow-hidden rounded-2xl border border-line">
+            <div class="swiper project-swiper mt-12 overflow-hidden rounded-2xl border border-line">
                 <div class="swiper-wrapper">
                     <?php foreach ($images as $index => $image): ?>
                         <div class="swiper-slide">
@@ -58,7 +58,7 @@ $neighbors = $neighbors ?? ['prev' => null, 'next' => null];
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        <nav class="mt-10 flex justify-between gap-4 border-t border-line pt-6" aria-label="More projects">
+        <nav class="pub-neighbors" aria-label="More projects">
             <?php if (!empty($neighbors['prev'])): ?>
                 <a class="text-accent" href="<?= e(url('/projects/' . $neighbors['prev']['slug'])) ?>">← <?= e($neighbors['prev']['name']) ?></a>
             <?php else: ?><span></span><?php endif; ?>

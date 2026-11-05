@@ -115,10 +115,9 @@
         onUpdate: function () { node.textContent = String(Math.round(state.n)); }
       });
     });
-    const line = document.querySelector('.timeline');
-    if (line) {
+    document.querySelectorAll('.timeline-line').forEach(function (line) {
       gsap.from(line, { scaleY: 0, transformOrigin: 'top', duration: 1, ease: 'none', scrollTrigger: { trigger: line, start: 'top 80%', end: 'bottom 60%', scrub: true } });
-    }
+    });
   } else {
     document.querySelectorAll('[data-bar]').forEach(function (bar) { bar.style.width = (bar.getAttribute('data-bar') || 0) + '%'; });
     document.querySelectorAll('[data-count]').forEach(function (node) { node.textContent = node.getAttribute('data-count') || '0'; });
