@@ -3,6 +3,27 @@
   const fine = window.matchMedia('(pointer: fine)').matches;
   const root = document.documentElement;
 
+  const menu = document.getElementById('mobile-menu');
+  const menuToggle = document.querySelector('[data-menu-toggle]');
+  if (menu && menuToggle) {
+    const setMenu = function (open) {
+      menu.classList.toggle('is-open', open);
+      menu.hidden = !open;
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    setMenu(false);
+    menuToggle.addEventListener('click', function () {
+      setMenu(menuToggle.getAttribute('aria-expanded') !== 'true');
+    });
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { setMenu(false); });
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') setMenu(false);
+    });
+  }
+
   const preloader = document.getElementById('preloader');
   if (preloader) {
     window.addEventListener('load', function () {

@@ -6,7 +6,7 @@ $projects = setting($settings, 'label_projects', 'Projects');
 $contact = setting($settings, 'label_contact', 'Contact');
 $skills = setting($settings, 'label_skills', 'My Skills');
 ?>
-<header class="pub-header sticky top-0 z-50 no-print" x-data="{ open: false }" @keydown.escape.window="open = false">
+<header class="pub-header sticky top-0 z-50 no-print">
     <div class="pub-header-bg" aria-hidden="true"></div>
     <div class="pub-wrap">
         <a href="<?= e(url('/')) ?>" class="pub-mark" aria-label="<?= e($display) ?>">
@@ -25,20 +25,17 @@ $skills = setting($settings, 'label_skills', 'My Skills');
                 <span class="theme-icon-light"><?= icon('sun', 'h-5 w-5') ?></span>
             </button>
             <a class="btn-ghost hidden sm:inline-flex" data-magnetic href="<?= e(url('/contact')) ?>"><?= e(setting($settings, 'btn_contact', 'Contact Me')) ?></a>
-            <button type="button" class="icon-btn md:hidden" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-menu" aria-label="Open menu">
-                <?= icon('menu', 'h-5 w-5') ?>
+            <button type="button" class="icon-btn md:hidden" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+                <span class="menu-icon-open"><?= icon('menu', 'h-5 w-5') ?></span>
+                <span class="menu-icon-close"><?= icon('x', 'h-5 w-5') ?></span>
             </button>
         </div>
     </div>
-    <div id="mobile-menu" class="mobile-menu md:hidden" x-show="open" x-cloak x-transition.opacity @click.outside="open = false">
-        <div class="pub-wrap flex items-center justify-between py-4">
-            <span class="pub-mark"><span>EA</span></span>
-            <button type="button" class="icon-btn" @click="open = false" aria-label="Close menu"><?= icon('x', 'h-5 w-5') ?></button>
-        </div>
+    <div id="mobile-menu" class="mobile-menu" hidden>
         <nav class="pub-wrap flex flex-col" aria-label="Mobile">
-            <a class="mobile-link" href="<?= e(url('/#about')) ?>" @click="open = false"><?= e($about) ?></a>
+            <a class="mobile-link" href="<?= e(url('/#about')) ?>"><?= e($about) ?></a>
             <a class="mobile-link" href="<?= e(url('/resume')) ?>"><?= e($resume) ?></a>
-            <a class="mobile-link" href="<?= e(url('/#skills')) ?>" @click="open = false"><?= e($skills) ?></a>
+            <a class="mobile-link" href="<?= e(url('/#skills')) ?>"><?= e($skills) ?></a>
             <a class="mobile-link" href="<?= e(url('/projects')) ?>"><?= e($projects) ?></a>
             <a class="mobile-link" href="<?= e(url('/contact')) ?>"><?= e($contact) ?></a>
             <a class="btn-primary mt-8" href="<?= e(url('/cv')) ?>"><?= e(setting($settings, 'btn_download_cv', 'Download CV')) ?></a>
